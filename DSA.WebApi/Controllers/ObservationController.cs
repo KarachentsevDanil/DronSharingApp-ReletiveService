@@ -45,13 +45,13 @@ namespace RCS.WebApi.Controllers
             };
 
             var observations = _observationService.GetObservationsByParams(filterParams);
-            var firstObsercation = observations.Collection.FirstOrDefault();
+            var firstObservation = observations.Collection.FirstOrDefault();
 
             var residentObservations = new ResidentObservationModel
             {
                 ResidentId = model.ResidentId,
-                Date = firstObsercation.RecordedDate,
-                Observations = observations.Collection.OrderBy(t => t.RecordedDate).ToList()
+                Date = firstObservation?.RecordedDate,
+                Observations = observations.Collection.ToList()
             };
 
             return Ok(residentObservations);

@@ -16,15 +16,21 @@ namespace RCS.BLL.Dto.Residents
 
         public DateTime BirthDay { get; set; }
 
-        public DateTime? AdmissionDate { get; set; }
+        public string AdmissionDate { get; set; }
 
-        public DateTime? DischargeDate { get; set; }
+        public string DischargeDate { get; set; }
 
         public string Photo { get; set; }
 
         public int FacilityId { get; set; }
 
         public string FacilityName { get; set; }
+
+        public string FacilityCity { get; set; }
+
+        public string FacilityPhone { get; set; }
+
+        public string FacilityEmail { get; set; }
 
         public int Age
         {

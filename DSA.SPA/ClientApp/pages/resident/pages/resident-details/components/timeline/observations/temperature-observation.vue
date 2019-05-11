@@ -1,20 +1,25 @@
 <template>
-    <div class="panel bg-blue-400">
-        <div class="panel-body position-relative">
-            <div class="media no-margin">
-                <div class="media-body text-left">
-                    <h3 class="media-heading text-semibold">{{temperatureInfo.Value +' '+ temperatureInfo.Unit}}</h3>
-                    <span class="text-uppercase ">Temperature</span>
-                    <div class="text-size-small" v-html="'New measurement as of '+ temperatureInfo.RecordedDate"></div>
-                </div>
-            </div>
-            <div class="observation-icon">
-                <i class="icon-temperature"></i>
-            </div>
+  <div class="panel bg-blue-400">
+    <div class="panel-body position-relative">
+      <div class="media no-margin">
+        <div class="media-body text-left">
+          <h3
+            class="media-heading text-semibold"
+          >{{temperatureInfo.Value +' '+ temperatureInfo.Unit}}</h3>
+          <span class="text-uppercase">Temperature</span>
+          <div
+            class="text-size-small"
+            v-html="'New measurement as of '+ temperatureInfo.RecordedDate"
+          ></div>
         </div>
-
-        <div id="chart_area_temp" style="height:50px;"></div>
+      </div>
+      <div class="observation-icon">
+        <i class="icon-temperature"></i>
+      </div>
     </div>
+
+    <div id="chart_area_temp" style="height:50px;"></div>
+  </div>
 </template>
 
 <script>
@@ -45,7 +50,7 @@ export default {
       .data.Observations;
 
     this.temperatureInfo = {
-      ...observations[observations.length - 1]
+      ...observations[0]
     };
 
     renderAreaChart(

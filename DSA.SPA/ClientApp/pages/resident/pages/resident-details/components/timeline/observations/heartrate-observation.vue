@@ -46,7 +46,7 @@ export default {
       .data.Observations;
 
     this.heartrateInfo = {
-      ...observations[observations.length - 1]
+      ...observations[0]
     };
     renderBarChart(
       ".container-graph",

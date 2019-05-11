@@ -28,7 +28,7 @@ export default {
         sortable: false
       },
       {
-        title: "Value",
+        title: "Units",
         field: "Unit",
         sortable: false
       },

@@ -43,7 +43,7 @@ export default {
     let observations = (await observationService.getObservationsByType(params))
       .data.Observations;
 
-    this.bloodpressureInfo = observations[observations.length - 1];
+    this.bloodpressureInfo = observations[0];
 
     renderTwoLineGraph(
       "#line_chart_simple",

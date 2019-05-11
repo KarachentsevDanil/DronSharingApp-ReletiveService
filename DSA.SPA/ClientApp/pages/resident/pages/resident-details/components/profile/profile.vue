@@ -8,6 +8,7 @@
 
         <div class="profile-details">
             <h1>{{residentDetails.FullName}}</h1>
+            <p><span>Admission Date: {{residentDetails.AdmissionDate}}</span></p>
             <p><span>Age: {{residentDetails.Age}}</span></p>
             <p><span>Birth Date: {{residentDetails.FormattedDate}}</span> (in {{residentDetails.DaysToBirthday}} days)</p>
         </div>

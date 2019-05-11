@@ -28,6 +28,16 @@ export default {
         sortable: false
       },
       {
+        title: "Phone",
+        field: "Phone",
+        sortable: false
+      },
+      {
+        title: "Email",
+        field: "Email",
+        sortable: false
+      },
+      {
         title: "Facility",
         field: "FacilityName",
         sortable: false

@@ -49,7 +49,7 @@ namespace RCS.BLL.Mapper
                 .ForMember(x => x.UserName, t => t.MapFrom(p => $"{p.User.FirstName} {p.User.LastName}"));
 
             CreateMap<Observation, ObservationDto>()
-               .ForMember(x => x.RecordedDate, t => t.MapFrom(p => p.RecordedDate.ToShortDateString()))
+               .ForMember(x => x.RecordedDate, t => t.MapFrom(p => p.RecordedDate.ToString("f")))
                .ForMember(x => x.Value, t => t.MapFrom(p => Math.Round(p.Value ?? 0, 2)))
                .ForMember(x => x.ResidentName, t => t.MapFrom(p => $"{p.Resident.FirstName} {p.Resident.LastName}"))
                .ForMember(x => x.TypeValue, t => t.MapFrom(p => p.Type.ToString()))
@@ -66,7 +66,12 @@ namespace RCS.BLL.Mapper
 
             CreateMap<Resident, ResidentDto>()
                .ForMember(x => x.FacilityName, t => t.MapFrom(p => p.Facility.Name))
+               .ForMember(x => x.FacilityCity, t => t.MapFrom(p => p.Facility.City))
+               .ForMember(x => x.FacilityEmail, t => t.MapFrom(p => p.Facility.Email))
+               .ForMember(x => x.FacilityPhone, t => t.MapFrom(p => p.Facility.Phone))
                .ForMember(x => x.FullName, t => t.MapFrom(p => $"{p.FirstName} {p.LastName}"))
+               .ForMember(x => x.AdmissionDate, t => t.MapFrom(p => p.AdmissionDate.HasValue ? p.AdmissionDate.Value.ToShortDateString() : string.Empty))
+               .ForMember(x => x.DischargeDate, t => t.MapFrom(p => p.DischargeDate.HasValue ? p.DischargeDate.Value.ToShortDateString() : string.Empty))
                .ForMember(x => x.FormattedDate, t => t.MapFrom(p => p.BirthDay.ToShortDateString()))
                .ForMember(x => x.Photo, t => t.MapFrom(p => $"data:image/png;base64,{Convert.ToBase64String(p.Photo)}"));
         }
