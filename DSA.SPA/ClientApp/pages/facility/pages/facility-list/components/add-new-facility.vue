@@ -10,6 +10,9 @@
 
                 <div class="modal-body">
                     <div class="form-group">
+                        <input v-model="city" class="form-control" placeholder="City..."/>
+                    </div>
+                    <div class="form-group">
                         <input v-model="name" class="form-control" placeholder="Name..."/>
                     </div>
                     <div class="form-group">
@@ -24,7 +27,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button @click="addFacility" type="button" :disabled="!name || !email || !phone || !address" class="btn btn-primary">Add</button>
+                    <button @click="addFacility" type="button" :disabled="!name || !email || !phone || !address || !city" class="btn btn-primary">Add</button>
                     <button type="button" class="btn btn-link close-add-popup" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -39,6 +42,7 @@ import * as facilityService from "../../../api/facility-service";
 export default {
   data() {
     return {
+      city: "",
       name: "",
       address: "",
       email: "",
@@ -48,6 +52,7 @@ export default {
   methods: {
     clearForm() {
       this.name = "";
+      this.city = "";
       this.address = "";
       this.email = "";
       this.phone = "";
@@ -55,6 +60,7 @@ export default {
     async addFacility() {
       let data = {
         name: this.name,
+        city: this.city,
         address: this.address,
         email: this.email,
         phone: this.phone,

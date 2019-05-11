@@ -1,22 +1,58 @@
 <template>
-    <div>
-        <div class="page-header">
-            <div class="page-header-content">
-                <div class="page-title">
-                  <a v-if="this.currentUser.Role == 'User'" href="#" class="btn bg-blue btn-labeled heading-btn legitRipple" data-toggle="modal" data-target="#addResident">
-                                <b><i class="icon-plus2"></i></b> Add Relative
-                            </a>
-                    </div>
-            </div>
+  <div>
+    <div class="page-header">
+      <div class="page-header-content">
+        <div class="page-title">
+          <h4 class="grid-title">
+            <i class="icon-user3 position-left"></i>
+            <span class="text-semibold">Resident Contact List</span>
+          </h4>
+          <a class="heading-elements-toggle">
+            <i class="icon-more"></i>
+          </a>
         </div>
 
-        <div class="content">
-            <div class="panel panel-flat without-header">
-                <datatable v-bind="$data" :HeaderSettings="false" />
-            </div>
+        <div class="heading-elements">
+          <div class="heading-btn-group">
+            <a
+              href="#"
+              v-if="this.currentUser.Role == 'User'"
+              class="btn bg-blue btn-labeled heading-btn legitRipple"
+              data-toggle="modal"
+              data-target="#addResident"
+            >
+              <b>
+                <i class="icon-plus2"></i>
+              </b> Add Relative
+            </a>
+          </div>
         </div>
-        <add-new-resident-contact :refreshList="getResidents"/>
+      </div>
+
+      <div class="breadcrumb-line breadcrumb-line-component">
+        <a class="breadcrumb-elements-toggle">
+          <i class="icon-menu-open"></i>
+        </a>
+        <ul class="breadcrumb">
+          <li>
+            <a href="/home">
+              <i class="icon-home2 position-left"></i> Home
+            </a>
+          </li>
+          <li>
+            <a class="active">Resident Contacts</a>
+          </li>
+        </ul>
+      </div>
     </div>
+
+    <div class="content">
+      <div class="panel panel-flat without-header">
+        <datatable v-bind="$data" :HeaderSettings="false"/>
+      </div>
+    </div>
+    <add-new-resident-contact :refreshList="getResidents"/>
+  </div>
 </template>
 
 <script>

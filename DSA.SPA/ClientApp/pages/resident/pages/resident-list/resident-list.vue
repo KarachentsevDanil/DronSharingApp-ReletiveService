@@ -1,22 +1,58 @@
 <template>
-    <div>
-        <div class="page-header">
-            <div class="page-header-content">
-                <div class="page-title">
-          <a href="#" class="btn bg-blue btn-labeled heading-btn legitRipple" data-toggle="modal" data-target="#addResident">
-                                <b><i class="icon-plus2"></i></b> Add Resident
-                            </a>         </div>
-            </div>
+  <div>
+    <div class="page-header">
+      <div class="page-header-content">
+        <div class="page-title">
+          <h4 class="grid-title">
+            <i class="icon-user3 position-left"></i>
+            <span class="text-semibold">Resident List</span>
+          </h4>
+          <a class="heading-elements-toggle">
+            <i class="icon-more"></i>
+          </a>
         </div>
 
-        <div class="content">
-            <div class="panel panel-flat without-header">
-                <datatable v-bind="$data" :HeaderSettings="false" />
-            </div>
+        <div class="heading-elements">
+          <div class="heading-btn-group">
+            <a
+              href="#"
+              class="btn bg-blue btn-labeled heading-btn legitRipple"
+              data-toggle="modal"
+              data-target="#addResident"
+            >
+              <b>
+                <i class="icon-plus2"></i>
+              </b> Add Resident
+            </a>
+          </div>
         </div>
-        <add-new-resident :refreshList="getResidents"/>
-        <add-resident-doctor :resident="xprops.selectedResident"></add-resident-doctor>
+      </div>
+
+      <div class="breadcrumb-line breadcrumb-line-component">
+        <a class="breadcrumb-elements-toggle">
+          <i class="icon-menu-open"></i>
+        </a>
+        <ul class="breadcrumb">
+          <li>
+            <a href="/home">
+              <i class="icon-home2 position-left"></i> Home
+            </a>
+          </li>
+          <li>
+            <a class="active">Residents</a>
+          </li>
+        </ul>
+      </div>
     </div>
+
+    <div class="content">
+      <div class="panel panel-flat without-header">
+        <datatable v-bind="$data" :HeaderSettings="false"/>
+      </div>
+    </div>
+    <add-new-resident :refreshList="getResidents"/>
+    <add-resident-doctor :resident="xprops.selectedResident"></add-resident-doctor>
+  </div>
 </template>
 
 <script>

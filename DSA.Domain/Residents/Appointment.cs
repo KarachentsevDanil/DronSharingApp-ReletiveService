@@ -1,7 +1,5 @@
 ﻿using RCS.Domain.Users;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RCS.Domain.Residents
 {

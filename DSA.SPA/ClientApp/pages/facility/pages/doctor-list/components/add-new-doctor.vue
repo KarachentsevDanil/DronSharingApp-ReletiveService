@@ -1,44 +1,72 @@
 <template>
-    <!-- Primary modal -->
-    <div id="addDoctor" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Add Doctor</h4>
-                </div>
-
-                <div class="modal-body">
-                    <div class="form-group">
-                        <input v-model="firstName" class="form-control" placeholder="First Name..."/>
-                    </div>
-                    <div class="form-group">
-                        <input v-model="lastName" class="form-control" placeholder="Last Name..."/>
-                    </div>
-                    <div class="form-group">
-                      <label>Facility: </label>
-                      <select2 style="width: 100%;"
-                             :configuration="facilitySelectConfiguration"
-                             :options="facilities"
-                             v-model="facilityId"></select2>
-                    </div>
-                    <div class="form-group">
-                      <label>Specialization: </label>
-                      <select2 style="width: 100%;"
-                             :configuration="specializationSelectConfiguration"
-                             :options="specializations"
-                             v-model="doctorSpecializationId"></select2>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button @click="addDoctor" type="button" :disabled="!firstName || !lastName" class="btn btn-primary">Add</button>
-                    <button type="button" class="btn btn-link close-add-popup" data-dismiss="modal">Close</button>
-                </div>
-            </div>
+  <!-- Primary modal -->
+  <div id="addDoctor" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Doctor</h4>
         </div>
+
+        <div class="modal-body">
+          <div class="form-group">
+            <input v-model="firstName" class="form-control" placeholder="First Name...">
+          </div>
+          <div class="form-group">
+            <input v-model="lastName" class="form-control" placeholder="Last Name...">
+          </div>
+          <div class="form-group">
+            <input v-model="phone" class="form-control" placeholder="Phone...">
+          </div>
+          <div class="form-group">
+            <input v-model="email" type="email" class="form-control" placeholder="Email...">
+          </div>
+          <div class="form-group">
+            <label>Birth Date:</label>
+            <datetime input-class="form-control" v-model="birthDate"></datetime>
+          </div>
+          <div class="form-group">
+            <textarea
+              cols="5"
+              rows="5"
+              v-model="description"
+              placeholder="Description..."
+              class="form-control"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label>Facility:</label>
+            <select2
+              style="width: 100%;"
+              :configuration="facilitySelectConfiguration"
+              :options="facilities"
+              v-model="facilityId"
+            ></select2>
+          </div>
+          <div class="form-group">
+            <label>Specialization:</label>
+            <select2
+              style="width: 100%;"
+              :configuration="specializationSelectConfiguration"
+              :options="specializations"
+              v-model="doctorSpecializationId"
+            ></select2>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            @click="addDoctor"
+            type="button"
+            :disabled="!firstName || !lastName || !phone || !description"
+            class="btn btn-primary"
+          >Add</button>
+          <button type="button" class="btn btn-link close-add-popup" data-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
-    <!-- /primary modal -->
+  </div>
+  <!-- /primary modal -->
 </template>
 
 <script>
@@ -54,6 +82,10 @@ export default {
     return {
       firstName: "",
       lastName: "",
+      description: "",
+      email: "",
+      phone: "",
+      birthDate: "",
       doctorSpecializationId: 0,
       facilityId: 0,
       facilities: [],
@@ -78,7 +110,9 @@ export default {
   },
   async beforeMount() {
     let facilities = (await facilityService.getFacilitiesByTerm("")).data.Data;
-    let specializations = (await doctorService.getDoctorSpecializationsByTerm("")).data.Data;
+    let specializations = (await doctorService.getDoctorSpecializationsByTerm(
+      ""
+    )).data.Data;
 
     this.facilities = facilities.map(el => ({
       id: el.FacilityId,
@@ -97,6 +131,10 @@ export default {
     clearForm() {
       this.firstName = "";
       this.lastName = "";
+      this.description = "";
+      this.email = "";
+      this.phone = "";
+      this.birthDate = "";
       this.doctorSpecializationId = 0;
       this.facilityId = 0;
     },
@@ -104,6 +142,10 @@ export default {
       let data = {
         firstName: this.firstName,
         lastName: this.lastName,
+        description: this.description,
+        email: this.email,
+        phone: this.phone,
+        birthDate: this.birthDate,
         facilityId: this.facilityId,
         doctorSpecializationId: this.doctorSpecializationId
       };

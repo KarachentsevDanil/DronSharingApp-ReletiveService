@@ -64,7 +64,7 @@ namespace RCS.WebApi.Controllers
             var residentModel = new ResidentDetailsModel
             {
                 Resident = resident,
-                BloodPressure = residentObservations.Collection.FirstOrDefault(t=> t.Type == Domain.Residents.ObservationType.BloodPressure),
+                BloodPressure = residentObservations.Collection.FirstOrDefault(t => t.Type == Domain.Residents.ObservationType.BloodPressure),
                 HeartRate = residentObservations.Collection.FirstOrDefault(t => t.Type == Domain.Residents.ObservationType.HeartRate),
                 Temperature = residentObservations.Collection.FirstOrDefault(t => t.Type == Domain.Residents.ObservationType.Temperature)
             };

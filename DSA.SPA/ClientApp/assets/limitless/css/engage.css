@@ -270,3 +270,8 @@ td.resident .img-xs {
     border-left-color: rgb(0, 150, 136);
     border-right-color: rgb(0, 150, 136);
 }
+
+.grid-title {
+    font-size: 24px;
+    margin-left: 5px !important;
+}

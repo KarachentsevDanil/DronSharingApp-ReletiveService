@@ -22,7 +22,7 @@ namespace RCS.IoT
             AuthenticationService.Authorize(new Model.CurrentUserViewModel
             {
                 Email = "admin@gmail.com",
-                Password = "123456"
+                Password = "eh1as1"
             });
 
             var resientsResult = ResidentService.GetResidents(residentFilterParams);

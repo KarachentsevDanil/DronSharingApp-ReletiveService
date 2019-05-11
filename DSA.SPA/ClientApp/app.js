@@ -17,7 +17,7 @@ import select2 from './pages/plugins/select2/select2'
 
 import App from './pages/layout/app-root'
 
-import 'vue2-dropzone/dist/vue2Dropzone.css'
+import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import 'vuejs-noty/dist/vuejs-noty.css'
 import 'vue-datetime/dist/vue-datetime.css'
 

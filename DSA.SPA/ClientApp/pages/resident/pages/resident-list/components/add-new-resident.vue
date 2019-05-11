@@ -5,7 +5,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-primary">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Add Doctor</h4>
+                    <h4 class="modal-title">Add Resident</h4>
                 </div>
 
                 <div class="modal-body">
@@ -25,6 +25,10 @@
                     <div class="form-group">
                       <label>Birthdate: </label>
                       <datetime input-class="form-control" v-model="birthDate"></datetime>
+                    </div>
+                    <div class="form-group">
+                      <label>Admission Date: </label>
+                      <datetime input-class="form-control" v-model="admissionDate"></datetime>
                     </div>
                     <div class="form-group">
                         <p>Photo: </p>
@@ -59,6 +63,7 @@ export default {
       facilityId: 0,
       photo: "",
       birthDate: "",
+      admissionDate: "",
       facilities: [],
       dropzoneOptions: {
         url: "https://httpbin.org/post",
@@ -98,6 +103,7 @@ export default {
     clearForm() {
       this.firstName = "";
       this.lastName = "";
+      this.admissionDate = "";
       this.facilityId = 0;
       this.photo = "";
       this.birthDate = "";
@@ -106,6 +112,7 @@ export default {
       let data = {
         firstName: this.firstName,
         lastName: this.lastName,
+        admissionDate: this.admissionDate,
         facilityId: this.facilityId,
         birthDay: this.birthDate,
         photo: this.photo

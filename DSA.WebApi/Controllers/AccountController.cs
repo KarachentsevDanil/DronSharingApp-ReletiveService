@@ -73,7 +73,8 @@ namespace RCS.WebApi.Controllers
                     FirstName = data.FirstName,
                     LastName = data.LastName,
                     FacilityId = data.FacilityId,
-                    DateOfBirthsday = data.DateOfBirthsday
+                    DateOfBirthsday = data.DateOfBirthsday,
+                    Role = data.Role
                 };
 
                 var result = await _userManager.CreateAsync(user, data.Password);
