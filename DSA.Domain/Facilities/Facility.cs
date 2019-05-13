@@ -18,9 +18,7 @@ namespace RCS.Domain.Facilities
 
         public string Email { get; set; }
 
-        public virtual ICollection<Resident> Residents { get; set; }
-
-        public virtual ICollection<Doctor> Doctors { get; set; }
+        public virtual ICollection<Department> Departments { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
     }

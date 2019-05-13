@@ -30,13 +30,7 @@ namespace RCS.BLL.Mapper
                 .ForMember(x => x.Doctor, t => t.Ignore());
 
             CreateMap<AddResidentDto, Resident>()
-                .ForMember(x => x.Photo, t => t.MapFrom(p => Convert.FromBase64String(p.Photo)))
-                .ForMember(x => x.ResidentId, t => t.Ignore())
-                .ForMember(x => x.Facility, t => t.Ignore())
-                .ForMember(x => x.Observations, t => t.Ignore())
-                .ForMember(x => x.Contacts, t => t.Ignore())
-                .ForMember(x => x.Appointments, t => t.Ignore())
-                .ForMember(x => x.Doctors, t => t.Ignore());
+                .ForMember(x => x.Photo, t => t.MapFrom(p => Convert.FromBase64String(p.Photo)));
 
             CreateMap<ResidentContactDto, ResidentContact>()
                 .ForMember(x => x.Resident, t => t.Ignore())
@@ -65,15 +59,43 @@ namespace RCS.BLL.Mapper
                .ForMember(x => x.DoctorName, t => t.MapFrom(p => $"{p.Doctor.FirstName} {p.Doctor.LastName}"));
 
             CreateMap<Resident, ResidentDto>()
-               .ForMember(x => x.FacilityName, t => t.MapFrom(p => p.Facility.Name))
-               .ForMember(x => x.FacilityCity, t => t.MapFrom(p => p.Facility.City))
-               .ForMember(x => x.FacilityEmail, t => t.MapFrom(p => p.Facility.Email))
-               .ForMember(x => x.FacilityPhone, t => t.MapFrom(p => p.Facility.Phone))
+               .ForMember(x => x.DepartmentName, t => t.MapFrom(p => p.Department.Name))
+               .ForMember(x => x.FacilityName, t => t.MapFrom(p => p.Department.Facility.Name))
+               .ForMember(x => x.FacilityCity, t => t.MapFrom(p => p.Department.Facility.City))
+               .ForMember(x => x.FacilityEmail, t => t.MapFrom(p => p.Department.Facility.Email))
+               .ForMember(x => x.FacilityPhone, t => t.MapFrom(p => p.Department.Facility.Phone))
                .ForMember(x => x.FullName, t => t.MapFrom(p => $"{p.FirstName} {p.LastName}"))
                .ForMember(x => x.AdmissionDate, t => t.MapFrom(p => p.AdmissionDate.HasValue ? p.AdmissionDate.Value.ToShortDateString() : string.Empty))
                .ForMember(x => x.DischargeDate, t => t.MapFrom(p => p.DischargeDate.HasValue ? p.DischargeDate.Value.ToShortDateString() : string.Empty))
                .ForMember(x => x.FormattedDate, t => t.MapFrom(p => p.BirthDay.ToShortDateString()))
                .ForMember(x => x.Photo, t => t.MapFrom(p => $"data:image/png;base64,{Convert.ToBase64String(p.Photo)}"));
+
+            CreateMap<AddResidentAnalyzesDto, ResidentAnalyzes>();
+
+            CreateMap<ResidentAnalyzes, ResidentAnalyzesDto>()
+                .ForMember(x => x.AnalyzeResult, t => t.MapFrom(p => $"data:{p.FileType};base64,{Convert.ToBase64String(p.AnalyzeResult)}"))
+                .ForMember(x => x.Doctor, t => t.MapFrom(p => $"{p.Doctor.FirstName} {p.Doctor.LastName}"))
+                .ForMember(x => x.Date, t => t.MapFrom(p => p.Date.ToString("f")))
+                .ForMember(x => x.Analyzes, t => t.MapFrom(p => p.Analyzes.Name))
+                .ForMember(x => x.RoomNumber, t => t.MapFrom(p => p.Analyzes.RoomNumber))
+                .ForMember(x => x.Department, t => t.MapFrom(p => p.Analyzes.Department.Name));
+
+            CreateMap<AddResidentDrugDto, ResidentDrug>();
+
+            CreateMap<ResidentDrug, ResidentDrugDto>()
+                .ForMember(x => x.Doctor, t => t.MapFrom(p => $"{p.Doctor.FirstName} {p.Doctor.LastName}"))
+                .ForMember(x => x.StartDate, t => t.MapFrom(p => p.StartDate.ToString("f")))
+                .ForMember(x => x.EndDate, t => t.MapFrom(p => p.EndDate.ToString("f")))
+                .ForMember(x => x.Drug, t => t.MapFrom(p => p.Drug.Name));
+
+            CreateMap<AddResidentManipulationDto, ResidentManipulation>();
+
+            CreateMap<ResidentManipulation, ResidentManipulationDto>()
+                .ForMember(x => x.Doctor, t => t.MapFrom(p => $"{p.Doctor.FirstName} {p.Doctor.LastName}"))
+                .ForMember(x => x.Date, t => t.MapFrom(p => p.Date.ToString("f")))
+                .ForMember(x => x.Manipulation, t => t.MapFrom(p => p.Manipulation.Name))
+                .ForMember(x => x.RoomNumber, t => t.MapFrom(p => p.Manipulation.RoomNumber))
+                .ForMember(x => x.Department, t => t.MapFrom(p => p.Manipulation.Department.Name));
         }
     }
 }

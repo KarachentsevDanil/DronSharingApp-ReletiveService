@@ -13,6 +13,8 @@ namespace RCS.DAL.Context.Mappings
 
             builder.HasKey(x => x.AppointmentId);
 
+            builder.Property(x => x.UserId).HasMaxLength(450);
+
             builder.HasOne(x => x.Resident).WithMany(x => x.Appointments).HasForeignKey(x => x.ResidentId);
 
             builder.HasOne(x => x.User).WithMany(x => x.Appointments).HasForeignKey(x => x.UserId);

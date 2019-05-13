@@ -10,8 +10,6 @@
                 cfg.AddProfile<FacilityAutoMapperProfile>();
                 cfg.AddProfile<ResidentAutoMapperProfile>();
             });
-
-            AutoMapper.Mapper.AssertConfigurationIsValid();
         }
     }
 }

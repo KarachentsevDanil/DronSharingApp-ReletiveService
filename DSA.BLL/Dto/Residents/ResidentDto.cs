@@ -22,9 +22,13 @@ namespace RCS.BLL.Dto.Residents
 
         public string Photo { get; set; }
 
+        public int DepartmentId { get; set; }
+
         public int FacilityId { get; set; }
 
         public string FacilityName { get; set; }
+
+        public string DepartmentName { get; set; }
 
         public string FacilityCity { get; set; }
 

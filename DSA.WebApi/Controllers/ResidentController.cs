@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using RCS.BLL.Dto.Residents;
 using RCS.Domain.Params;
 using System.Linq;
+using RCS.BLL.Services.Contracts.Residents;
 
 namespace RCS.WebApi.Controllers
 {
@@ -16,18 +17,27 @@ namespace RCS.WebApi.Controllers
         private readonly IResidentService _residentService;
         private readonly IResidentContactService _residentContactService;
         private readonly IResidentDoctorService _residentDoctorService;
+        private readonly IResidentAnalyzesService _residentAnalyzesService;
+        private readonly IResidentDrugService _residentDrugService;
+        private readonly IResidentManipulationService _residentManipulationService;
         private readonly IObservationService _observationService;
 
         public ResidentController(
             IResidentService residentService,
             IResidentContactService residentContactService,
             IResidentDoctorService residentDoctorService,
-            IObservationService observationService)
+            IObservationService observationService,
+            IResidentAnalyzesService residentAnalyzesService,
+            IResidentDrugService residentDrugService,
+            IResidentManipulationService residentManipulationService)
         {
             _residentService = residentService;
             _residentContactService = residentContactService;
             _residentDoctorService = residentDoctorService;
             _observationService = observationService;
+            _residentAnalyzesService = residentAnalyzesService;
+            _residentDrugService = residentDrugService;
+            _residentManipulationService = residentManipulationService;
         }
 
         [HttpPost]
@@ -48,6 +58,27 @@ namespace RCS.WebApi.Controllers
         public IActionResult AddResidentContact([FromBody] AddResidentContactDto residentContactDto)
         {
             _residentContactService.AddResidentContact(residentContactDto);
+            return Json(JsonResultData.Success());
+        }
+
+        [HttpPost]
+        public IActionResult AddResidentAnalyzes([FromBody] AddResidentAnalyzesDto data)
+        {
+            _residentAnalyzesService.AddResidentAnalyzes(data);
+            return Json(JsonResultData.Success());
+        }
+
+        [HttpPost]
+        public IActionResult AddResidentDrug([FromBody] AddResidentDrugDto data)
+        {
+            _residentDrugService.AddResidentDrug(data);
+            return Json(JsonResultData.Success());
+        }
+
+        [HttpPost]
+        public IActionResult AddResidentManipulation([FromBody] AddResidentManipulationDto data)
+        {
+            _residentManipulationService.AddResidentManipulation(data);
             return Json(JsonResultData.Success());
         }
 
@@ -84,6 +115,27 @@ namespace RCS.WebApi.Controllers
         {
             var residents = _residentService.GetResidentsByParams(filterParams);
             return Json(JsonResultData.Success(residents));
+        }
+
+        [HttpPost]
+        public IActionResult GetResidentDrugs([FromBody] ResidentDrugsFilterParams filterParams)
+        {
+            var items = _residentDrugService.GetResidentDrugsByParams(filterParams);
+            return Json(JsonResultData.Success(items));
+        }
+
+        [HttpPost]
+        public IActionResult GetResidentAnalyzes([FromBody] ResidentAnalyzesFilterParams filterParams)
+        {
+            var items = _residentAnalyzesService.GetResidentAnalyzesByParams(filterParams);
+            return Json(JsonResultData.Success(items));
+        }
+
+        [HttpPost]
+        public IActionResult GetResidentManipulations([FromBody] ResidentManipulationsFilterParams filterParams)
+        {
+            var items = _residentManipulationService.GetResidentManipulationsByParams(filterParams);
+            return Json(JsonResultData.Success(items));
         }
 
         [HttpPost]

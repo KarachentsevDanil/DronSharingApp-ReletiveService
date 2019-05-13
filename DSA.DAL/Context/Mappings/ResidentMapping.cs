@@ -13,7 +13,7 @@ namespace RCS.DAL.Context.Mappings
 
             builder.HasKey(x => x.ResidentId);
 
-            builder.HasOne(x => x.Facility).WithMany(x => x.Residents).HasForeignKey(x => x.FacilityId);
+            builder.HasOne(x => x.Department).WithMany(x => x.Residents).HasForeignKey(x => x.DepartmentId);
         }
     }
 }

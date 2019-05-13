@@ -28,7 +28,7 @@
                             <li class="divider"></li>
                             <li>
                                 <a href="#" class="legitRipple" v-on:click="logout">
-                                    <i class="icon-switch2"></i>
+                                    <i class="icon-exit"></i>
                                     Logout
                                 </a>
                             </li>
@@ -57,13 +57,13 @@ export default {
           name: "home",
           path: "/home",
           display: "Home",
-          iconClass: "icon-home4"
+          iconClass: "icon-home2"
         },
         {
           name: "enrollment",
           path: "/resident-contacts",
           display: "My Relative",
-          iconClass: "icon-user-plus"
+          iconClass: "icon-user2"
         }
       ],
       facilityAdminNavigationItems: [
@@ -71,25 +71,25 @@ export default {
           name: "home",
           path: "/home",
           display: "Home",
-          iconClass: "icon-home4"
+          iconClass: "icon-home2"
         },
         {
           name: "residents",
           path: "/resident-list",
           display: "Resident List",
-          iconClass: "icon-user-plus"
+          iconClass: "icon-user"
         },
         {
           name: "residentContacts",
           path: "/resident-contacts",
           display: "Resident Contact List",
-          iconClass: "icon-user-plus"
+          iconClass: "icon-user2"
         },
         {
           name: "doctors",
           path: "/doctors",
           display: "Doctor List",
-          iconClass: "icon-user-plus"
+          iconClass: "icon-user3"
         }
       ],
       globalNavigationItems: [
@@ -97,19 +97,19 @@ export default {
           name: "home",
           path: "/home",
           display: "Home",
-          iconClass: "icon-home4"
+          iconClass: "icon-home2"
         },
         {
           name: "users",
           path: "/user-list",
           display: "User List",
-          iconClass: "icon-user-plus"
+          iconClass: "icon-user"
         },
         {
           name: "facilities",
           path: "/facilities",
           display: "Facility List",
-          iconClass: "icon-user-plus"
+          iconClass: "icon-home3"
         }
       ]
     };

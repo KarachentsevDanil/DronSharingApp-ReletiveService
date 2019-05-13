@@ -23,6 +23,14 @@ namespace RCS.WebApi.Modules
             builder.RegisterType<ResidentDoctorRepository>().As<IResidentDoctorRepository>();
             builder.RegisterType<ResidentRepository>().As<IResidentRepository>();
             builder.RegisterType<UserRepository>().As<IUserRepository>();
+
+            builder.RegisterType<AnalyzesRepository>().As<IAnalyzesRepository>();
+            builder.RegisterType<DepartmentRepository>().As<IDepartmentRepository>();
+            builder.RegisterType<DrugRepository>().As<IDrugRepository>();
+            builder.RegisterType<ManipulationRepository>().As<IManipulationRepository>();
+            builder.RegisterType<ResidentManipulationRepository>().As<IResidentManipulationRepository>();
+            builder.RegisterType<ResidentAnalyzesRepository>().As<IResidentAnalyzesRepository>();
+            builder.RegisterType<ResidentDrugRepository>().As<IResidentDrugRepository>();
         }
     }
 }

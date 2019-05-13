@@ -73,6 +73,7 @@ namespace RCS.WebApi.Controllers
                     FirstName = data.FirstName,
                     LastName = data.LastName,
                     FacilityId = data.FacilityId,
+                    DoctorId = data.DoctorId,
                     DateOfBirthsday = data.DateOfBirthsday,
                     Role = data.Role
                 };

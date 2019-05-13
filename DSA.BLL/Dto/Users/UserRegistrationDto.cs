@@ -18,5 +18,7 @@ namespace RCS.BLL.Dto.Customers
         public DateTime? DateOfBirthsday { get; set; }
 
         public int? FacilityId { get; set; }
+
+        public int? DoctorId { get; set; }
     }
 }

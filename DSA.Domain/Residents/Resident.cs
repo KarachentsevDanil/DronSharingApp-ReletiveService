@@ -20,9 +20,9 @@ namespace RCS.Domain.Residents
 
         public byte[] Photo { get; set; }
 
-        public int FacilityId { get; set; }
+        public int DepartmentId { get; set; }
 
-        public virtual Facility Facility { get; set; }
+        public virtual Department Department { get; set; }
 
         public virtual ICollection<ResidentContact> Contacts { get; set; }
 
@@ -31,5 +31,11 @@ namespace RCS.Domain.Residents
         public virtual ICollection<Appointment> Appointments { get; set; }
 
         public virtual ICollection<Observation> Observations { get; set; }
+
+        public virtual ICollection<ResidentDrug> Drugs { get; set; }
+
+        public virtual ICollection<ResidentManipulation> Manipulations { get; set; }
+
+        public virtual ICollection<ResidentAnalyzes> Analyzes { get; set; }
     }
 }

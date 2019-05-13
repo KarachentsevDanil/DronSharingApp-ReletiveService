@@ -30,6 +30,20 @@ namespace RCS.DAL.UnitOfWork
 
         public IResidentContactRepository ResidentContactRepository { get; set; }
 
+        public IAnalyzesRepository AnalyzesRepository { get; set; }
+
+        public IDepartmentRepository DepartmentRepository { get; set; }
+
+        public IDrugRepository DrugRepository { get; set; }
+
+        public IManipulationRepository ManipulationRepository { get; set; }
+
+        public IResidentAnalyzesRepository ResidentAnalyzesRepository { get; set; }
+
+        public IResidentDrugRepository ResidentDrugRepository { get; set; }
+
+        public IResidentManipulationRepository ResidentManipulationRepository { get; set; }
+
         public IResidentDoctorRepository ResidentDoctorRepository { get; set; }
 
         public void Commit()
