@@ -4,7 +4,7 @@ namespace RCS.Domain.Params
 {
     public class AnalyzesFilterParams : FilterParams<Analyzes>
     {
-        public int DepartmentId { get; set; }
+        public int FacilityId { get; set; }
 
         public string Term { get; set; }
     }

@@ -53,7 +53,7 @@ namespace RCS.DAL.Repositories
 
         private void FillAnalyzesQueryParams(AnalyzesFilterParams filterParams)
         {
-            var predicate = PredicateBuilder.New<Analyzes>(t => t.DepartmentId == filterParams.DepartmentId);
+            var predicate = PredicateBuilder.New<Analyzes>(t => t.Department.FacilityId == filterParams.FacilityId);
 
             if (!string.IsNullOrWhiteSpace(filterParams.Term))
             {

@@ -50,7 +50,7 @@ namespace RCS.DAL.Repositories
 
         private void FillManipulationsQueryParams(ManipulationsFilterParams filterParams)
         {
-            var predicate = PredicateBuilder.New<Manipulation>(t => t.DepartmentId == filterParams.DepartmentId);
+            var predicate = PredicateBuilder.New<Manipulation>(t => t.DepartmentId == filterParams.FacilityId);
 
             if (!string.IsNullOrWhiteSpace(filterParams.Term))
             {

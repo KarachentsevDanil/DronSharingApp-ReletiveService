@@ -3,8 +3,10 @@ using RCS.WebApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RCS.BLL.Dto.Customers;
 using RCS.Domain.Params;
 using RCS.BLL.Dto.Facilities;
+using RCS.WebApi.Extensions;
 
 namespace RCS.WebApi.Controllers
 {
@@ -27,8 +29,15 @@ namespace RCS.WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetFacilities([FromBody] AnalyzesFilterParams filterParams)
+        public IActionResult GetAnalyzes([FromBody] AnalyzesFilterParams filterParams)
         {
+            UserDto user = User.GetUserModel();
+
+            if (user.FacilityId.HasValue)
+            {
+                filterParams.FacilityId = user.FacilityId.Value;
+            }
+
             var items = _analyzesService.GetAnalyzesByParams(filterParams);
 
             return Json(JsonResultData.Success(items));

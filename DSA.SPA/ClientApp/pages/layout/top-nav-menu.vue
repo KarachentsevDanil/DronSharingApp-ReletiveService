@@ -73,18 +73,7 @@ export default {
           display: "Home",
           iconClass: "icon-home2"
         },
-        {
-          name: "residents",
-          path: "/resident-list",
-          display: "Resident List",
-          iconClass: "icon-user"
-        },
-        {
-          name: "residentContacts",
-          path: "/resident-contacts",
-          display: "Resident Contact List",
-          iconClass: "icon-user2"
-        },
+        
         {
           name: "departments",
           path: "/departments",
@@ -96,6 +85,30 @@ export default {
           path: "/doctors",
           display: "Doctor List",
           iconClass: "icon-user3"
+        },
+        {
+          name: "analyzes",
+          path: "/analyzes",
+          display: "Analyzes List",
+          iconClass: "icon-user3"
+        },
+        {
+          name: "manipulation",
+          path: "/manipulations",
+          display: "Manipulation List",
+          iconClass: "icon-user3"
+        },
+        {
+          name: "residents",
+          path: "/resident-list",
+          display: "Resident List",
+          iconClass: "icon-user"
+        },
+        {
+          name: "residentContacts",
+          path: "/resident-contacts",
+          display: "Resident Contact List",
+          iconClass: "icon-user2"
         }
       ],
       globalNavigationItems: [
@@ -115,6 +128,12 @@ export default {
           name: "facilities",
           path: "/facilities",
           display: "Facility List",
+          iconClass: "icon-home3"
+        },
+        {
+          name: "drugs",
+          path: "/drugs",
+          display: "Drug List",
           iconClass: "icon-home3"
         }
       ]

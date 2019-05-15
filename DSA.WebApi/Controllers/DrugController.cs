@@ -27,7 +27,7 @@ namespace RCS.WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetFacilities([FromBody] DrugsFilterParams filterParams)
+        public IActionResult GetDrugs([FromBody] DrugsFilterParams filterParams)
         {
             var items = _drugService.GetDrugsByParams(filterParams);
 
