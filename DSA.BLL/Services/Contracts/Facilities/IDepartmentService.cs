@@ -1,4 +1,5 @@
-﻿using RCS.BLL.Dto.Facilities;
+﻿using System.Collections.Generic;
+using RCS.BLL.Dto.Facilities;
 using RCS.Domain.Params;
 
 namespace RCS.BLL.Services.Contracts
@@ -8,5 +9,7 @@ namespace RCS.BLL.Services.Contracts
         void AddDepartment(AddDepartmentDto data);
         
         CollectionResult<DepartmentDto> GetDepartmentsByParams(DepartmentsFilterParams filterParams);
+
+        IEnumerable<DepartmentDto> GetDepartmentsByTerm(int facilityId, string term);
     }
 }

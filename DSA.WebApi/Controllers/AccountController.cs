@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -9,7 +10,10 @@ using RCS.WebApi.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using RCS.Domain.Facilities;
 using RCS.Domain.Params;
+using RCS.Domain.Residents;
+using RCS.Domain.Users;
 
 namespace RCS.WebApi.Controllers
 {
@@ -52,8 +56,8 @@ namespace RCS.WebApi.Controllers
 
             if (result.Succeeded)
             {
-                var token = GenerateToken(model.Email);
                 var user = _customerService.GetCustomerByTerm(model.Email);
+                var token = GenerateToken(user);
 
                 return Json(new { user, token, tokenExpireData = DateTime.Now.AddDays(1) });
             }
@@ -96,14 +100,27 @@ namespace RCS.WebApi.Controllers
             return Json(JsonResultData.Success(users));
         }
 
-        private string GenerateToken(string username)
+        private string GenerateToken(UserDto user)
         {
-            var claims = new[]
+            var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, username),
+                new Claim(nameof(UserDto.UserId), user.UserId),
+                new Claim(ClaimTypes.Name, user.Email),
+                new Claim(ClaimTypes.Role, user.Role),
                 new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
                 new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddDays(1)).ToUnixTimeSeconds().ToString()),
             };
+
+            if (user.FacilityId.HasValue)
+            {
+
+                claims.Add(new Claim(nameof(UserDto.FacilityId), user.FacilityId.Value.ToString()));
+            }
+
+            if (user.DoctorId.HasValue)
+            {
+                claims.Add(new Claim(nameof(UserDto.DoctorId), user.DoctorId.Value.ToString()));
+            }
 
             var token = new JwtSecurityToken(
                 new JwtHeader(new SigningCredentials(

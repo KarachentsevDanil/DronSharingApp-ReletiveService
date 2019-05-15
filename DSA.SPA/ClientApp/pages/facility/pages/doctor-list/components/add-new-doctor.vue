@@ -35,12 +35,12 @@
             ></textarea>
           </div>
           <div class="form-group">
-            <label>Facility:</label>
+            <label>Department:</label>
             <select2
               style="width: 100%;"
-              :configuration="facilitySelectConfiguration"
-              :options="facilities"
-              v-model="facilityId"
+              :configuration="departmentSelectConfiguration"
+              :options="departments"
+              v-model="departmentId"
             ></select2>
           </div>
           <div class="form-group">
@@ -71,7 +71,7 @@
 
 <script>
 import * as doctorService from "../../../api/doctor-service";
-import * as facilityService from "../../../api/facility-service";
+import * as departmentService from "../../../api/department-service";
 
 const iconFormat = el => {
   return el.text;
@@ -87,11 +87,11 @@ export default {
       phone: "",
       birthDate: "",
       doctorSpecializationId: 0,
-      facilityId: 0,
-      facilities: [],
+      departmentId: 0,
+      departments: [],
       specializations: [],
-      facilitySelectConfiguration: {
-        placeholder: "Select a facility...",
+      departmentSelectConfiguration: {
+        placeholder: "Select a department...",
         templateResult: iconFormat,
         templateSelection: iconFormat,
         escapeMarkup: function(m) {
@@ -109,13 +109,13 @@ export default {
     };
   },
   async beforeMount() {
-    let facilities = (await facilityService.getFacilitiesByTerm("")).data.Data;
+    let departments = (await departmentService.getDepartmentsByTerm("")).data.Data;
     let specializations = (await doctorService.getDoctorSpecializationsByTerm(
       ""
     )).data.Data;
 
-    this.facilities = facilities.map(el => ({
-      id: el.FacilityId,
+    this.departments = departments.map(el => ({
+      id: el.Id,
       text: el.Name
     }));
 
@@ -124,7 +124,7 @@ export default {
       text: el.Name
     }));
 
-    this.facilityId = this.facilities[0].id;
+    this.departmentId = this.departments[0].id;
     this.doctorSpecializationId = this.specializations[0].id;
   },
   methods: {
@@ -136,7 +136,7 @@ export default {
       this.phone = "";
       this.birthDate = "";
       this.doctorSpecializationId = 0;
-      this.facilityId = 0;
+      this.departmentId = 0;
     },
     async addDoctor() {
       let data = {
@@ -146,7 +146,7 @@ export default {
         email: this.email,
         phone: this.phone,
         birthDate: this.birthDate,
-        facilityId: this.facilityId,
+        departmentId: this.departmentId,
         doctorSpecializationId: this.doctorSpecializationId
       };
 

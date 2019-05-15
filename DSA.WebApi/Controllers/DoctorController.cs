@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RCS.BLL.Services.Contracts;
 using RCS.BLL.Dto.Facilities;
+using RCS.WebApi.Extensions;
 
 namespace RCS.WebApi.Controllers
 {
@@ -52,7 +53,15 @@ namespace RCS.WebApi.Controllers
         [HttpPost]
         public IActionResult GetDoctors([FromBody] DoctorsFilterParams filterParams)
         {
+            var userModel = User.GetUserModel();
+
+            if (userModel.FacilityId.HasValue)
+            {
+                filterParams.FacilityId = userModel.FacilityId.Value;
+            }
+
             var doctors = _doctorService.GetDoctorsByParams(filterParams);
+
             return Json(JsonResultData.Success(doctors));
         }
 

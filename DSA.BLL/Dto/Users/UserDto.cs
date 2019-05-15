@@ -14,6 +14,8 @@
 
         public int? FacilityId { get; set; }
 
+        public int? DoctorId { get; set; }
+
         public string FacilityName { get; set; }
 
         public string FullName => $"{FirstName} {LastName}";

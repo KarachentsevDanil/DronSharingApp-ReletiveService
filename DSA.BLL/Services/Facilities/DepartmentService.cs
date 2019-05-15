@@ -35,5 +35,12 @@ namespace RCS.BLL.Services
 
             return result;
         }
+
+        public IEnumerable<DepartmentDto> GetDepartmentsByTerm(int facilityId, string term)
+        {
+            var items = _unitOfWork.DepartmentRepository.GetDepartmentsByTerm(facilityId, term);
+
+            return AutoMapper.Mapper.Map<IEnumerable<DepartmentDto>>(items);
+        }
     }
 }

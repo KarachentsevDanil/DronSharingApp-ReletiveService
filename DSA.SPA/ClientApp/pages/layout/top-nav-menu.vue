@@ -86,6 +86,12 @@ export default {
           iconClass: "icon-user2"
         },
         {
+          name: "departments",
+          path: "/departments",
+          display: "Department List",
+          iconClass: "icon-home3"
+        },
+        {
           name: "doctors",
           path: "/doctors",
           display: "Doctor List",

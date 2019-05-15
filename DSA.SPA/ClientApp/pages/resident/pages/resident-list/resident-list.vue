@@ -85,8 +85,8 @@ export default {
         sortable: false
       },
       {
-        title: "Facility",
-        field: "FacilityName",
+        title: "Department",
+        field: "DepartmentName",
         sortable: false
       },
       {

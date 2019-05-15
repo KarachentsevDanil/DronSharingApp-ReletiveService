@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RCS.BLL.Dto.Residents
 {
@@ -18,6 +16,6 @@ namespace RCS.BLL.Dto.Residents
 
         public string Photo { get; set; }
 
-        public int FacilityId { get; set; }
+        public int DepartmentId { get; set; }
     }
 }

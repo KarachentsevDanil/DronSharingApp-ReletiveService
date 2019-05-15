@@ -1,11 +1,11 @@
-﻿using LinqKit;
+﻿using System.Collections.Generic;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using RCS.DAL.Context;
 using RCS.DAL.Repositories.Contract;
-using RCS.Domain.Params;
-using RCS.Domain.Residents;
-using System.Linq;
 using RCS.Domain.Facilities;
+using RCS.Domain.Params;
+using System.Linq;
 
 namespace RCS.DAL.Repositories
 {
@@ -42,6 +42,14 @@ namespace RCS.DAL.Repositories
             };
 
             return appointmentsResult;
+        }
+
+        public IEnumerable<Department> GetDepartmentsByTerm(int facilityId, string term)
+        {
+            return _dbContext.Departments
+                .Include(t => t.Facility)
+                .Where(t => t.FacilityId == facilityId && t.Name.Contains(term))
+                .AsNoTracking();
         }
 
         private IQueryable<Department> GetAllDepartments()

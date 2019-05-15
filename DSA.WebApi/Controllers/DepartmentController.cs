@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RCS.Domain.Params;
 using RCS.BLL.Dto.Facilities;
+using RCS.WebApi.Extensions;
 
 namespace RCS.WebApi.Controllers
 {
@@ -19,6 +20,14 @@ namespace RCS.WebApi.Controllers
             _departmentService = departmentService;
         }
 
+        [HttpGet]
+        public IActionResult GetDepartmentsByTerm(string term)
+        {
+            var userModel = User.GetUserModel();
+            var facilities = _departmentService.GetDepartmentsByTerm(userModel.FacilityId.Value, term ?? string.Empty);
+            return Json(JsonResultData.Success(facilities));
+        }
+
         [HttpPost]
         public IActionResult AddDepartment([FromBody]AddDepartmentDto departmentDto)
         {
@@ -27,8 +36,15 @@ namespace RCS.WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetFacilities([FromBody] DepartmentsFilterParams filterParams)
+        public IActionResult GetDepartments([FromBody] DepartmentsFilterParams filterParams)
         {
+            var userModel = User.GetUserModel();
+
+            if (userModel.FacilityId.HasValue)
+            {
+                filterParams.FacilityId = userModel.FacilityId.Value;
+            }
+
             var items = _departmentService.GetDepartmentsByParams(filterParams);
 
             return Json(JsonResultData.Success(items));

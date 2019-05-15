@@ -16,11 +16,11 @@
                         <input v-model="lastName" class="form-control" placeholder="Last Name..."/>
                     </div>
                     <div class="form-group">
-                      <label>Facility: </label>
+                      <label>Department: </label>
                       <select2 style="width: 100%;"
-                             :configuration="facilitySelectConfiguration"
-                             :options="facilities"
-                             v-model="facilityId"></select2>
+                             :configuration="departmentSelectConfiguration"
+                             :options="departments"
+                             v-model="departmentId"></select2>
                     </div>
                     <div class="form-group">
                       <label>Birthdate: </label>
@@ -49,7 +49,7 @@
 
 <script>
 import * as residentService from "../../../api/resident-service";
-import * as facilityService from "../../../api/facility-service";
+import * as departmentService from "../../../api/department-service";
 
 const iconFormat = el => {
   return el.text;
@@ -60,11 +60,11 @@ export default {
     return {
       firstName: "",
       lastName: "",
-      facilityId: 0,
+      departmentId: 0,
       photo: "",
       birthDate: "",
       admissionDate: "",
-      facilities: [],
+      departments: [],
       dropzoneOptions: {
         url: "https://httpbin.org/post",
         thumbnailWidth: 200,
@@ -72,8 +72,8 @@ export default {
         dictDefaultMessage:
           "<span class='upload-text'><i class='fal fa-cloud-upload'></i> Photo</span>"
       },
-      facilitySelectConfiguration: {
-        placeholder: "Select a facility...",
+      departmentSelectConfiguration: {
+        placeholder: "Select a department...",
         templateResult: iconFormat,
         templateSelection: iconFormat,
         escapeMarkup: function(m) {
@@ -83,14 +83,14 @@ export default {
     };
   },
   async beforeMount() {
-    let facilities = (await facilityService.getFacilitiesByTerm("")).data.Data;
+    let departments = (await departmentService.getDepartmentsByTerm("")).data.Data;
 
-    this.facilities = facilities.map(el => ({
-      id: el.FacilityId,
+    this.departments = departments.map(el => ({
+      id: el.Id,
       text: el.Name
     }));
 
-    this.facilityId = this.facilities[0].id;
+    this.departmentId = this.departments[0].id;
   },
   methods: {
     photoSuccessfullyAdded(file, response) {
@@ -104,7 +104,7 @@ export default {
       this.firstName = "";
       this.lastName = "";
       this.admissionDate = "";
-      this.facilityId = 0;
+      this.departmentId = 0;
       this.photo = "";
       this.birthDate = "";
     },
@@ -113,7 +113,7 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         admissionDate: this.admissionDate,
-        facilityId: this.facilityId,
+        departmentId: this.departmentId,
         birthDay: this.birthDate,
         photo: this.photo
       };

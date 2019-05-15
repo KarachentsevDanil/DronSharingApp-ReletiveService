@@ -5,7 +5,7 @@
         <div class="page-title">
           <h4 class="grid-title">
             <i class="icon-user3 position-left"></i>
-            <span class="text-semibold">Doctor List</span>
+            <span class="text-semibold">Department List</span>
           </h4>
           <a class="heading-elements-toggle">
             <i class="icon-more"></i>
@@ -18,11 +18,11 @@
               href="#"
               class="btn bg-blue btn-labeled heading-btn legitRipple"
               data-toggle="modal"
-              data-target="#addDoctor"
+              data-target="#addDepartment"
             >
               <b>
                 <i class="icon-plus2"></i>
-              </b> Add Doctor
+              </b> Add Department
             </a>
           </div>
         </div>
@@ -39,7 +39,7 @@
             </a>
           </li>
           <li>
-            <a class="active">Doctors</a>
+            <a class="active">Departments</a>
           </li>
         </ul>
       </div>
@@ -50,20 +50,20 @@
         <datatable v-bind="$data" :HeaderSettings="false"/>
       </div>
     </div>
-    <add-new-doctor :refreshList="getDoctors"/>
+    <add-new-department :refreshList="getDepartments"/>
   </div>
 </template>
 
 <script>
-import * as doctorService from "../../api/doctor-service";
+import * as departmentService from "../../api/department-service";
 
-import addNewDoctor from "./components/add-new-doctor";
+import addNewDepartment from "./components/add-new-department";
 
 import Vue from "Vue";
 
 export default {
   components: {
-    addNewDoctor: addNewDoctor
+    addNewDepartment: addNewDepartment
   },
   data: () => ({
     tblClass: "grid-table",
@@ -71,32 +71,22 @@ export default {
     columns: [
       {
         title: "Id",
-        field: "DoctorId",
+        field: "Id",
         sortable: false
       },
       {
         title: "Name",
-        field: "FullName",
+        field: "Name",
         sortable: false
       },
       {
-        title: "Department",
-        field: "DepartmentName",
+        title: "Facility",
+        field: "FacilityName",
         sortable: false
       },
       {
-        title: "Specialization",
-        field: "Specialization",
-        sortable: false
-      },
-      {
-        title: "Phone",
-        field: "Phone",
-        sortable: false
-      },
-      {
-        title: "Email",
-        field: "Email",
+        title: "Description",
+        field: "Description",
         sortable: false
       }
     ],
@@ -110,19 +100,19 @@ export default {
   watch: {
     query: {
       async handler() {
-        await this.getDoctors();
+        await this.getDepartments();
       },
       deep: true
     }
   },
   methods: {
-    async getDoctors() {
+    async getDepartments() {
       let params = {
         skip: this.query.offset,
         take: this.query.limit
       };
 
-      let data = (await doctorService.getDoctors(params)).data.Data;
+      let data = (await departmentService.getDepartments(params)).data.Data;
 
       this.data = data.Collection;
       this.total = data.TotalCount;
