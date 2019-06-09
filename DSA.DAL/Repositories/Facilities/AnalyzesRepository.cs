@@ -4,6 +4,7 @@ using RCS.DAL.Context;
 using RCS.DAL.Repositories.Contract;
 using RCS.Domain.Params;
 using RCS.Domain.Residents;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RCS.DAL.Repositories
@@ -47,7 +48,7 @@ namespace RCS.DAL.Repositories
         {
             return _dbContext.Analyzes
                 .Include(t => t.Department)
-                .ThenInclude(t=> t.Facility)
+                .ThenInclude(t => t.Facility)
                 .AsQueryable();
         }
 
@@ -61,6 +62,13 @@ namespace RCS.DAL.Repositories
             }
 
             filterParams.Expression = predicate;
+        }
+
+        public IEnumerable<Analyzes> GetAnalyzesByTerm(int facilityId, string term)
+        {
+            return GetAllAnalyzes()
+                .Where(t => t.Department.FacilityId == facilityId && t.Name.Contains(term))
+                .ToList();
         }
     }
 }

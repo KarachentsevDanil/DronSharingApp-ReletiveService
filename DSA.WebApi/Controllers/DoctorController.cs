@@ -1,11 +1,14 @@
-﻿using RCS.Domain.Params;
-using RCS.WebApi.Models;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using RCS.BLL.Services.Contracts;
 using RCS.BLL.Dto.Facilities;
+using RCS.BLL.Services.Contracts;
+using RCS.Domain.Params;
+using RCS.Domain.Users;
 using RCS.WebApi.Extensions;
+using RCS.WebApi.Models;
 
 namespace RCS.WebApi.Controllers
 {
@@ -13,13 +16,21 @@ namespace RCS.WebApi.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class DoctorController : Controller
     {
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IDoctorService _doctorService;
         private readonly IDoctorSpecializationService _doctorSpecializationService;
 
-        public DoctorController(IDoctorService doctorService, IDoctorSpecializationService doctorSpecializationService)
+        public DoctorController(
+            IDoctorService doctorService,
+            IDoctorSpecializationService doctorSpecializationService,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
             _doctorService = doctorService;
             _doctorSpecializationService = doctorSpecializationService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpGet]
@@ -37,9 +48,23 @@ namespace RCS.WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddDoctor([FromBody] AddDoctorDto doctorDto)
+        public async Task<IActionResult> AddDoctor([FromBody] AddDoctorDto doctorDto)
         {
-            _doctorService.AddDoctor(doctorDto);
+            int doctorId = _doctorService.AddDoctor(doctorDto);
+
+            var user = new User
+            {
+                UserName = doctorDto.Email,
+                Email = doctorDto.Email,
+                FirstName = doctorDto.FirstName,
+                LastName = doctorDto.LastName,
+                FacilityId = doctorDto.FacilityId,
+                DoctorId = doctorId,
+                Role = Role.FacilityDoctor
+            };
+
+            var result = await _userManager.CreateAsync(user, doctorDto.Password);
+
             return Json(JsonResultData.Success());
         }
 

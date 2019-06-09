@@ -19,7 +19,7 @@ namespace RCS.WebApi.Extensions
                 user.FacilityId = facilityId;
             }
 
-            if (int.TryParse(claims.FindFirstValue(nameof(UserDto.FacilityId)), out var doctorId))
+            if (int.TryParse(claims.FindFirstValue(nameof(UserDto.DoctorId)), out var doctorId))
             {
                 user.DoctorId = doctorId;
             }

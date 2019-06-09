@@ -22,6 +22,14 @@
             <input v-model="email" type="email" class="form-control" placeholder="Email...">
           </div>
           <div class="form-group">
+            <input
+              v-model="password"
+              type="password"
+              class="form-control"
+              placeholder="Password..."
+            >
+          </div>
+          <div class="form-group">
             <label>Birth Date:</label>
             <datetime input-class="form-control" v-model="birthDate"></datetime>
           </div>
@@ -80,12 +88,14 @@ const iconFormat = el => {
 export default {
   data() {
     return {
+      user: {},
       firstName: "",
       lastName: "",
       description: "",
       email: "",
       phone: "",
       birthDate: "",
+      password: "",
       doctorSpecializationId: 0,
       departmentId: 0,
       departments: [],
@@ -109,7 +119,10 @@ export default {
     };
   },
   async beforeMount() {
-    let departments = (await departmentService.getDepartmentsByTerm("")).data.Data;
+    this.user = JSON.parse(localStorage.getItem("user"));
+
+    let departments = (await departmentService.getDepartmentsByTerm("")).data
+      .Data;
     let specializations = (await doctorService.getDoctorSpecializationsByTerm(
       ""
     )).data.Data;
@@ -134,6 +147,7 @@ export default {
       this.description = "";
       this.email = "";
       this.phone = "";
+      this.password = "";
       this.birthDate = "";
       this.doctorSpecializationId = 0;
       this.departmentId = 0;
@@ -147,7 +161,9 @@ export default {
         phone: this.phone,
         birthDate: this.birthDate,
         departmentId: this.departmentId,
-        doctorSpecializationId: this.doctorSpecializationId
+        doctorSpecializationId: this.doctorSpecializationId,
+        password: this.password,
+        facilityId: this.user.FacilityId
       };
 
       await doctorService.addDoctor(data);

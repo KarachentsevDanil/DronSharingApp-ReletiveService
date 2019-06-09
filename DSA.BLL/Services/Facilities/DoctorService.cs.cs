@@ -16,12 +16,13 @@ namespace RCS.BLL.Services
             _unitOfWork = unitOfWork;
         }
         
-
-        public void AddDoctor(AddDoctorDto data)
+        public int AddDoctor(AddDoctorDto data)
         {
             var newDoctor = AutoMapper.Mapper.Map<AddDoctorDto, Doctor>(data);
             _unitOfWork.DoctorRepository.Add(newDoctor);
             _unitOfWork.Commit();
+
+            return newDoctor.DoctorId;
         }
         
         public IEnumerable<DoctorDto> GetDoctors(string term)

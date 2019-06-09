@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RCS.Domain.Params;
 using RCS.BLL.Dto.Facilities;
+using RCS.WebApi.Extensions;
 
 namespace RCS.WebApi.Controllers
 {
@@ -31,6 +32,14 @@ namespace RCS.WebApi.Controllers
         {
             var items = _drugService.GetDrugsByParams(filterParams);
 
+            return Json(JsonResultData.Success(items));
+        }
+
+        [HttpGet]
+        public IActionResult GetDrugsByTerm(string term)
+        {
+            var userModel = User.GetUserModel();
+            var items = _drugService.GetDrugsByTerm(term ?? string.Empty);
             return Json(JsonResultData.Success(items));
         }
     }

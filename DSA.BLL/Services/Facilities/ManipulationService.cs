@@ -35,5 +35,11 @@ namespace RCS.BLL.Services
 
             return result;
         }
+
+        public IEnumerable<ManipulationDto> GetManipulationsByTerm(int facilityId, string term)
+        {
+            var items = _unitOfWork.ManipulationRepository.GetManipulationsByTerm(facilityId, term);
+            return AutoMapper.Mapper.Map<IEnumerable<Manipulation>, List<ManipulationDto>>(items);
+        }
     }
 }

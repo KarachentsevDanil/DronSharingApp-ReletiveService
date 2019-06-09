@@ -76,6 +76,7 @@ namespace RCS.BLL.Mapper
                 .ForMember(x => x.AnalyzeResult, t => t.MapFrom(p => $"data:{p.FileType};base64,{Convert.ToBase64String(p.AnalyzeResult)}"))
                 .ForMember(x => x.Doctor, t => t.MapFrom(p => $"{p.Doctor.FirstName} {p.Doctor.LastName}"))
                 .ForMember(x => x.Date, t => t.MapFrom(p => p.Date.ToString("f")))
+                .ForMember(x => x.OrderDateValue, t => t.MapFrom(p => p.Date))
                 .ForMember(x => x.Analyzes, t => t.MapFrom(p => p.Analyzes.Name))
                 .ForMember(x => x.RoomNumber, t => t.MapFrom(p => p.Analyzes.RoomNumber))
                 .ForMember(x => x.Department, t => t.MapFrom(p => p.Analyzes.Department.Name));
@@ -84,6 +85,7 @@ namespace RCS.BLL.Mapper
 
             CreateMap<ResidentDrug, ResidentDrugDto>()
                 .ForMember(x => x.Doctor, t => t.MapFrom(p => $"{p.Doctor.FirstName} {p.Doctor.LastName}"))
+                .ForMember(x => x.OrderDateValue, t => t.MapFrom(p => p.StartDate))
                 .ForMember(x => x.StartDate, t => t.MapFrom(p => p.StartDate.ToString("f")))
                 .ForMember(x => x.EndDate, t => t.MapFrom(p => p.EndDate.ToString("f")))
                 .ForMember(x => x.Drug, t => t.MapFrom(p => p.Drug.Name));
@@ -93,6 +95,7 @@ namespace RCS.BLL.Mapper
             CreateMap<ResidentManipulation, ResidentManipulationDto>()
                 .ForMember(x => x.Doctor, t => t.MapFrom(p => $"{p.Doctor.FirstName} {p.Doctor.LastName}"))
                 .ForMember(x => x.Date, t => t.MapFrom(p => p.Date.ToString("f")))
+                .ForMember(x => x.OrderDateValue, t => t.MapFrom(p => p.Date))
                 .ForMember(x => x.Manipulation, t => t.MapFrom(p => p.Manipulation.Name))
                 .ForMember(x => x.RoomNumber, t => t.MapFrom(p => p.Manipulation.RoomNumber))
                 .ForMember(x => x.Department, t => t.MapFrom(p => p.Manipulation.Department.Name));

@@ -42,5 +42,13 @@ namespace RCS.WebApi.Controllers
 
             return Json(JsonResultData.Success(items));
         }
+
+        [HttpGet]
+        public IActionResult GetAnalyzesByTerm(string term)
+        {
+            var userModel = User.GetUserModel();
+            var items = _analyzesService.GetAnalyzesByTerm(userModel.FacilityId.Value, term ?? string.Empty);
+            return Json(JsonResultData.Success(items));
+        }
     }
 }

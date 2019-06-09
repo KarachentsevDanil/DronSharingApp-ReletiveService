@@ -1,4 +1,5 @@
-﻿using RCS.BLL.Dto.Facilities;
+﻿using System.Collections.Generic;
+using RCS.BLL.Dto.Facilities;
 using RCS.Domain.Params;
 
 namespace RCS.BLL.Services.Contracts
@@ -8,5 +9,7 @@ namespace RCS.BLL.Services.Contracts
         void AddAnalyzes(AddAnalyzesDto data);
         
         CollectionResult<AnalyzesDto> GetAnalyzesByParams(AnalyzesFilterParams filterParams);
+
+        IEnumerable<AnalyzesDto> GetAnalyzesByTerm(int facilityId, string term);
     }
 }

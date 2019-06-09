@@ -42,5 +42,13 @@ namespace RCS.WebApi.Controllers
 
             return Json(JsonResultData.Success(items));
         }
+
+        [HttpGet]
+        public IActionResult GetManipulationsByTerm(string term)
+        {
+            var userModel = User.GetUserModel();
+            var items = _manipulationService.GetManipulationsByTerm(userModel.FacilityId.Value, term ?? string.Empty);
+            return Json(JsonResultData.Success(items));
+        }
     }
 }

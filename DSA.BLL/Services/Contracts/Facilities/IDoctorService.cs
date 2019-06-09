@@ -6,7 +6,7 @@ namespace RCS.BLL.Services.Contracts
 {
     public interface IDoctorService
     {
-        void AddDoctor(AddDoctorDto data);
+        int AddDoctor(AddDoctorDto data);
 
         IEnumerable<DoctorDto> GetDoctors(string term);
 

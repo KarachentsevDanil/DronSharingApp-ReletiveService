@@ -35,5 +35,11 @@ namespace RCS.BLL.Services
 
             return result;
         }
+
+        public IEnumerable<AnalyzesDto> GetAnalyzesByTerm(int facilityId, string term)
+        {
+            var items = _unitOfWork.AnalyzesRepository.GetAnalyzesByTerm(facilityId, term);
+            return AutoMapper.Mapper.Map<IEnumerable<Analyzes>, List<AnalyzesDto>>(items);
+        }
     }
 }

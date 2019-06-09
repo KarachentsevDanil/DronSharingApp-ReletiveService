@@ -1,43 +1,49 @@
 <template>
-    <div class="navbar navbar-inverse bg-teal">
-        <div class="navbar-boxed">
-            <div class="navbar-header">
-                <router-link class="navbar-brand" to="home"><img src="../../assets/limitless/images/logo_light.png" alt=""></router-link>
-                <ul class="nav navbar-nav visible-xs-block">
-                    <li><a data-toggle="collapse" data-target="#navbar-mobile" class="legitRipple"><i class="icon-paragraph-justify3"></i></a></li>
-                </ul>
-            </div>
-            <div class="navbar-collapse collapse" id="navbar-mobile">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown dropdown-user">
-                        <a class="dropdown-toggle legitRipple" data-toggle="dropdown">
-                            <i class="icon-user"></i>
-                            <span>{{user.FirstName}} {{user.LastName}}</span>
-                            <i class="caret"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li v-for="(item, index) in getNavigationItems" :key="index">
-                                <router-link active-class="active" class="legitRipple" :to="item.path">
-                                    <div class="resident-icon-holder">
-                                        <i v-if="!item.p_Photo" :class="[item.iconClass, 'resident-icon']"></i>
-                                        <img v-else :src="item.p_Photo" class="img-circle img-xs" />
-                                    </div>
-                                    <span>{{item.display}}</span>
-                                </router-link>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#" class="legitRipple" v-on:click="logout">
-                                    <i class="icon-exit"></i>
-                                    Logout
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
+  <div class="navbar navbar-inverse bg-teal">
+    <div class="navbar-boxed">
+      <div class="navbar-header">
+        <router-link class="navbar-brand" to="home">
+          <img src="../../assets/limitless/images/logo_light.png" alt>
+        </router-link>
+        <ul class="nav navbar-nav visible-xs-block">
+          <li>
+            <a data-toggle="collapse" data-target="#navbar-mobile" class="legitRipple">
+              <i class="icon-paragraph-justify3"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar-mobile">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown dropdown-user">
+            <a class="dropdown-toggle legitRipple" data-toggle="dropdown">
+              <i class="icon-user"></i>
+              <span>{{user.FirstName}} {{user.LastName}}</span>
+              <i class="caret"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li v-for="(item, index) in getNavigationItems" :key="index">
+                <router-link active-class="active" class="legitRipple" :to="item.path">
+                  <div class="resident-icon-holder">
+                    <i v-if="!item.p_Photo" :class="[item.iconClass, 'resident-icon']"></i>
+                    <img v-else :src="item.p_Photo" class="img-circle img-xs">
+                  </div>
+                  <span>{{item.display}}</span>
+                </router-link>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href="#" class="legitRipple" v-on:click="logout">
+                  <i class="icon-exit"></i>
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -73,7 +79,7 @@ export default {
           display: "Home",
           iconClass: "icon-home2"
         },
-        
+
         {
           name: "departments",
           path: "/departments",
@@ -111,6 +117,20 @@ export default {
           iconClass: "icon-user2"
         }
       ],
+      doctorNavigationItems: [
+        {
+          name: "home",
+          path: "/home",
+          display: "Home",
+          iconClass: "icon-home2"
+        },
+        {
+          name: "residents",
+          path: "/resident-list",
+          display: "Resident List",
+          iconClass: "icon-user"
+        }
+      ],
       globalNavigationItems: [
         {
           name: "home",
@@ -145,8 +165,9 @@ export default {
         url: `/api/account/getMyContacts?userId=${this.user.UserId}`
       };
 
-      let residentsNavItems = (await httpService.getData(params)).data.Data.Collection;
-      
+      let residentsNavItems = (await httpService.getData(params)).data.Data
+        .Collection;
+
       residentsNavItems.map(el => {
         el.display = el.ResidentName;
         el.path = "/resident-details/" + el.ResidentId;
@@ -174,6 +195,8 @@ export default {
           return this.facilityAdminNavigationItems;
         case "GlobalAdmin":
           return this.globalNavigationItems;
+        case "FacilityDoctor":
+          return this.doctorNavigationItems;
       }
     }
   },

@@ -20,14 +20,14 @@ namespace RCS.WebApi.Controllers
     [Route("api/[controller]/[action]")]
     public class AccountController : Controller
     {
-        private readonly UserManager<Domain.Users.User> _userManager;
-        private readonly SignInManager<Domain.Users.User> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IUserService _customerService;
         private readonly IResidentContactService _residentContactService;
 
         public AccountController(
-            UserManager<Domain.Users.User> userManager,
-            SignInManager<Domain.Users.User> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             IUserService customerService,
             IResidentContactService residentContactService)
         {

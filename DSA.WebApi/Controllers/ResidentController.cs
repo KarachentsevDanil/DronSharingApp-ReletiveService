@@ -1,4 +1,5 @@
-﻿using RCS.BLL.Services.Contracts;
+﻿using System.Collections.Generic;
+using RCS.BLL.Services.Contracts;
 using RCS.WebApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +8,7 @@ using RCS.BLL.Dto.Residents;
 using RCS.Domain.Params;
 using System.Linq;
 using RCS.BLL.Services.Contracts.Residents;
+using RCS.WebApi.Extensions;
 
 namespace RCS.WebApi.Controllers
 {
@@ -15,6 +17,7 @@ namespace RCS.WebApi.Controllers
     public class ResidentController : Controller
     {
         private readonly IResidentService _residentService;
+        private readonly IAppointmentService _appointmentService;
         private readonly IResidentContactService _residentContactService;
         private readonly IResidentDoctorService _residentDoctorService;
         private readonly IResidentAnalyzesService _residentAnalyzesService;
@@ -25,6 +28,7 @@ namespace RCS.WebApi.Controllers
         public ResidentController(
             IResidentService residentService,
             IResidentContactService residentContactService,
+            IAppointmentService appointmentService,
             IResidentDoctorService residentDoctorService,
             IObservationService observationService,
             IResidentAnalyzesService residentAnalyzesService,
@@ -33,6 +37,7 @@ namespace RCS.WebApi.Controllers
         {
             _residentService = residentService;
             _residentContactService = residentContactService;
+            _appointmentService = appointmentService;
             _residentDoctorService = residentDoctorService;
             _observationService = observationService;
             _residentAnalyzesService = residentAnalyzesService;
@@ -64,6 +69,9 @@ namespace RCS.WebApi.Controllers
         [HttpPost]
         public IActionResult AddResidentAnalyzes([FromBody] AddResidentAnalyzesDto data)
         {
+            var userModel = User.GetUserModel();
+            data.DoctorId = userModel.DoctorId.Value;
+
             _residentAnalyzesService.AddResidentAnalyzes(data);
             return Json(JsonResultData.Success());
         }
@@ -71,6 +79,9 @@ namespace RCS.WebApi.Controllers
         [HttpPost]
         public IActionResult AddResidentDrug([FromBody] AddResidentDrugDto data)
         {
+            var userModel = User.GetUserModel();
+            data.DoctorId = userModel.DoctorId.Value;
+
             _residentDrugService.AddResidentDrug(data);
             return Json(JsonResultData.Success());
         }
@@ -78,6 +89,9 @@ namespace RCS.WebApi.Controllers
         [HttpPost]
         public IActionResult AddResidentManipulation([FromBody] AddResidentManipulationDto data)
         {
+            var userModel = User.GetUserModel();
+            data.DoctorId = userModel.DoctorId.Value;
+
             _residentManipulationService.AddResidentManipulation(data);
             return Json(JsonResultData.Success());
         }
@@ -113,6 +127,11 @@ namespace RCS.WebApi.Controllers
         [HttpPost]
         public IActionResult GetResidents([FromBody] ResidentsFilterParams filterParams)
         {
+            var userModel = User.GetUserModel();
+
+            filterParams.FacilityId = userModel.FacilityId;
+            filterParams.DoctorId = userModel.DoctorId;
+
             var residents = _residentService.GetResidentsByParams(filterParams);
             return Json(JsonResultData.Success(residents));
         }
@@ -157,6 +176,70 @@ namespace RCS.WebApi.Controllers
         {
             _residentContactService.UpdateResidentContact(resident);
             return Json(JsonResultData.Success());
+        }
+
+        [HttpGet]
+        public IActionResult GetResidentTimeline(int residentId)
+        {
+            List<TimelineDto> timelines = new List<TimelineDto>();
+
+            var analyzes = _residentAnalyzesService.GetResidentAnalyzesByParams(new ResidentAnalyzesFilterParams()
+            {
+                ResidentId = residentId,
+                Skip = 0,
+                Take = int.MaxValue
+            });
+
+            var drugs = _residentDrugService.GetResidentDrugsByParams(new ResidentDrugsFilterParams()
+            {
+                ResidentId = residentId,
+                Skip = 0,
+                Take = int.MaxValue
+            });
+
+            var manipulations = _residentManipulationService.GetResidentManipulationsByParams(new ResidentManipulationsFilterParams()
+            {
+                ResidentId = residentId,
+                Skip = 0,
+                Take = int.MaxValue
+            });
+
+            var visits = _appointmentService.GetAppointmentsByParams(new AppointmentsFilterParams()
+            {
+                ResidentId = residentId,
+                Skip = 0,
+                Take = int.MaxValue
+            });
+
+            timelines.AddRange(analyzes.Collection.Select(t => new TimelineDto()
+            {
+                EventDate = t.OrderDateValue,
+                Item = t,
+                Type = (int)TimelineType.Analyze
+            }));
+
+            timelines.AddRange(drugs.Collection.Select(t => new TimelineDto()
+            {
+                EventDate = t.OrderDateValue,
+                Item = t,
+                Type = (int)TimelineType.Drug
+            }));
+
+            timelines.AddRange(manipulations.Collection.Select(t => new TimelineDto()
+            {
+                EventDate = t.OrderDateValue,
+                Item = t,
+                Type = (int)TimelineType.Manipulation
+            }));
+
+            timelines.AddRange(visits.Collection.Select(t => new TimelineDto()
+            {
+                EventDate = t.Date,
+                Item = t,
+                Type = (int)TimelineType.Appointment
+            }));
+
+            return Json(JsonResultData.Success(timelines.OrderByDescending(t => t.EventDate)));
         }
     }
 }

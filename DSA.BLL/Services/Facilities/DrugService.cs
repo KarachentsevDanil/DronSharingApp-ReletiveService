@@ -35,5 +35,11 @@ namespace RCS.BLL.Services
 
             return result;
         }
+
+        public IEnumerable<DrugDto> GetDrugsByTerm(string term)
+        {
+            var items = _unitOfWork.DrugRepository.GetDrugsByTerm(term);
+            return AutoMapper.Mapper.Map<IEnumerable<Drug>, List<DrugDto>>(items);
+        }
     }
 }

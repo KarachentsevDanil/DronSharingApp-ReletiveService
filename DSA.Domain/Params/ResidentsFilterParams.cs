@@ -7,5 +7,7 @@ namespace RCS.Domain.Params
         public string Term { get; set; }
 
         public int? FacilityId { get; set; }
+
+        public int? DoctorId { get; set; }
     }
 }

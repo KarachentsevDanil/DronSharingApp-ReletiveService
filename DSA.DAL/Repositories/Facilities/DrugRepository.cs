@@ -4,6 +4,7 @@ using RCS.DAL.Context;
 using RCS.DAL.Repositories.Contract;
 using RCS.Domain.Params;
 using RCS.Domain.Residents;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RCS.DAL.Repositories
@@ -59,6 +60,13 @@ namespace RCS.DAL.Repositories
             }
 
             filterParams.Expression = predicate;
+        }
+
+        public IEnumerable<Drug> GetDrugsByTerm(string term)
+        {
+            return GetAllDrugs()
+                .Where(t => t.Name.Contains(term))
+                .ToList();
         }
     }
 }

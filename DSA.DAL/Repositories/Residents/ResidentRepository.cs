@@ -1,11 +1,11 @@
-﻿using System.Linq;
+﻿using LinqKit;
+using Microsoft.EntityFrameworkCore;
 using RCS.DAL.Context;
 using RCS.DAL.Repositories.Contract;
 using RCS.Domain.Params;
-using LinqKit;
-using Microsoft.EntityFrameworkCore;
 using RCS.Domain.Residents;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RCS.DAL.Repositories
 {
@@ -70,6 +70,11 @@ namespace RCS.DAL.Repositories
             if (filterParams.FacilityId.HasValue)
             {
                 predicate = predicate.And(t => t.Department.FacilityId == filterParams.FacilityId.Value);
+            }
+
+            if (filterParams.DoctorId.HasValue)
+            {
+                predicate = predicate.And(t => t.Doctors.Any(d => d.DoctorId == filterParams.DoctorId.Value));
             }
 
             filterParams.Expression = predicate;

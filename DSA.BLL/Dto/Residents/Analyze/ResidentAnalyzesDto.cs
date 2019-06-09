@@ -14,6 +14,8 @@ namespace RCS.BLL.Dto.Residents
 
         public string Date { get; set; }
 
+        public DateTime OrderDateValue { get; set; }
+
         public string AnalyzeResult { get; set; }
 
         public string Analyzes { get; set; }

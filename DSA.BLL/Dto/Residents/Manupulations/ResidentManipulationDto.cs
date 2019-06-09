@@ -16,6 +16,8 @@ namespace RCS.BLL.Dto.Residents
 
         public string Duration { get; set; }
 
+        public DateTime OrderDateValue { get; set; }
+
         public string Manipulation { get; set; }
 
         public string Doctor { get; set; }
