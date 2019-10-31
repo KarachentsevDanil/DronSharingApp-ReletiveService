@@ -9,7 +9,7 @@
     },
     "dependencies": {
         "@fancyapps/fancybox": "^3.2.5",
-        "axios": "^0.17.1",
+        "axios": "^0.19.0",
         "chart.js": "^2.7.1",
         "core-js": "^2.4.1",
         "fullcalendar": "3.9.0",
